@@ -36,15 +36,16 @@ def directions(orig, dest):
 
 def _validate_bounds(coord, bound_city):
     try:
-        geo = gmaps.reverse_geocode(coord)[0]['address_components']
+        geo = gmaps.reverse_geocode(coord)
     except Exception as e:
         traceback.print_exc()
         raise ProviderError(repr(e))
 
     try:
+        geo = geo[0]['address_components']
         city = filter(lambda g: 'locality' in g['types'], geo)[0]['short_name']
         country = filter(lambda g: 'country' in g['types'], geo)[0]['short_name']
-    except IndexError:
+    except (IndexError, KeyError):
         raise OutOfBounds("Cannot determine city or country. "
                           "Location must be within {}".format(bound_city))
     cur_city = "{},{}".format(city, country)

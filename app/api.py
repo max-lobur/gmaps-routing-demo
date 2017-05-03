@@ -17,10 +17,14 @@ limiter = Limiter(app, key_func=get_remote_address,
 
 def coord(raw_coord):
     try:
-        x, y = raw_coord.split(",")
-        return float(x), float(y)
+        lat, lon = raw_coord.split(",")
+        lat, lon = float(lat), float(lon)
+        assert -85.0 < lat < 85.0
+        assert -180.0 < lon < 180.0
+        return lat, lon
     except Exception:
-        raise ValueError("Coordinate must be in format latitude,longitude")
+        raise ValueError("Coordinate must be in format "
+                         "latitude(-90:90),longitude(-180:180)")
 
 
 class Directions(Resource):
