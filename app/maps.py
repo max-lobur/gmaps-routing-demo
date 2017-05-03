@@ -2,8 +2,9 @@ import os
 import googlemaps
 import traceback
 
-bounds = os.environ['GMAPS_BOUNDS']
-maps = googlemaps.Client(key=os.environ['GMAPS_KEY'])
+bounds = os.environ['BOUND_CITY']
+mode = os.environ.get('ROUTE_MODE', 'driving')
+gmaps = googlemaps.Client(key=os.environ['GMAPS_KEY'])
 
 
 class ProviderError(Exception):
@@ -19,7 +20,7 @@ def directions(orig, dest):
     _validate_bounds(dest, bounds)
 
     try:
-        steps = maps.directions(orig, dest, mode='driving')[0]['legs'][0]['steps']
+        steps = gmaps.directions(orig, dest, mode=mode)[0]['legs'][0]['steps']
     except Exception as e:
         traceback.print_exc()
         raise ProviderError(repr(e))
@@ -35,7 +36,7 @@ def directions(orig, dest):
 
 def _validate_bounds(coord, bound_city):
     try:
-        geo = maps.reverse_geocode(coord)[0]['address_components']
+        geo = gmaps.reverse_geocode(coord)[0]['address_components']
     except Exception as e:
         traceback.print_exc()
         raise ProviderError(repr(e))
@@ -46,7 +47,7 @@ def _validate_bounds(coord, bound_city):
     except IndexError:
         raise OutOfBounds("Cannot determine city or country. "
                           "Location must be within {}".format(bound_city))
-    loc = "{},{}".format(city, country)
-    if not loc == bound_city:
+    cur_city = "{},{}".format(city, country)
+    if cur_city != bound_city:
         raise OutOfBounds("Location must be within {}, "
-                          "but {}{} given".format(bound_city, loc, coord))
+                          "but {}{} given".format(bound_city, cur_city, coord))

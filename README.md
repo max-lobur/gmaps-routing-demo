@@ -11,7 +11,7 @@ pip install -r requirements.txt
 A Google API key can be obtained [here](https://developers.google.com/maps/documentation/directions/)
 ```bash
 export GMAPS_KEY=<your_api_key>
-export GMAPS_BOUNDS="Vinnytsia,UA"
+export BOUND_CITY="Vinnytsia,UA"
 python app/api.py
 ```
 
