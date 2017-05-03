@@ -18,6 +18,8 @@ python app/api.py
 #### Testing with curl
 ```bash
 curl -X GET "http://127.0.0.1:5000/?orig=49.2314,28.4017&dest=49.2322,28.4737"
+
+curl -X GET "http://127.0.0.1:5000/?orig=49.2314,28.4017&dest=49.982504,36.259318"
 ```
 
 #### Notes:
