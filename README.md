@@ -1,5 +1,5 @@
 ## Map routing demo
-Google maps API routing demo app with
+Google maps API routing demo app built with flask
 
 #### Installation
 ```bash

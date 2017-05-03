@@ -1,0 +1,7 @@
+# macOS
+*.DS_*
+
+# python
+*.pyc
+*.pyo
+__pycache__
