@@ -24,7 +24,7 @@ def coord(raw_coord):
         return lat, lon
     except Exception:
         raise ValueError("Coordinate must be in format "
-                         "latitude(-90:90),longitude(-180:180)")
+                         "latitude(-85.0:85.0),longitude(-180.0:180.0)")
 
 
 class Directions(Resource):
