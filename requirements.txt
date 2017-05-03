@@ -1,0 +1,4 @@
+flask-restful
+flask-cache
+flask-limiter
+googlemaps
