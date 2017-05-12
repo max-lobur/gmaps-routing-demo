@@ -1,0 +1,18 @@
+location / {
+    error_page 404 = @fallback;
+    if ($http_pragma ~* "no-cache") {
+        return 404;
+    }
+    if ($http_cache_control ~* "no-cache") {
+        return 404;
+    }
+
+    set $enhanced_memcached_key "$request_uri";
+    set $enhanced_memcached_key_namespace "$host";
+    enhanced_memcached_hash_keys_with_md5 on;
+    enhanced_memcached_pass memcached_upstream;
+}
+
+location @fallback {
+    proxy_pass http://backend_upstream;
+}
